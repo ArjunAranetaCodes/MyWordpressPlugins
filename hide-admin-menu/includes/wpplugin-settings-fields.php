@@ -25,13 +25,17 @@ function wpplugin_settings2() {
 		//echo '<pre>' . $menu[0] . '</pre>';
 			// Dropdown
 		if($menu[0] != ''){
+			$menu_field_name = strtolower($menu[0]);
+			$menu_field_name = str_replace(' ', '_', $menu_field_name);
+			
 			add_settings_field(
 				'wpplugin_settings_select'.$menu[0],
 				__( $menu[0], 'wpplugin'),
-				'wpplugin_settings_select_callback2',
+				'admin_show_hide_menu_items',
 				'wpplugin',
 				'wpplugin_settings_section',
 				[
+					'menu_name' => $menu_field_name,
 					'option_one' => 'Hide',
 					'option_two' => 'Show'
 				]
@@ -55,16 +59,17 @@ function wpplugin_settings_section_callback2() {
 
 }
 
-function wpplugin_settings_select_callback2( $args ) {
+function admin_show_hide_menu_items( $args ) {
 
   $options = get_option( 'wpplugin_settings2' );
 
+  $select_name = 'select'.$args['menu_name'];
   $select = '';
-	if( isset( $options[ 'select' ] ) ) {
-		$select = esc_html( $options['select'] );
+	if( isset( $options[ $select_name ] ) ) {
+		$select = esc_html( $options[$select_name] );
 	}
 
-  $html = '<select id="wpplugin_settings_options" name="wpplugin_settings2[select]">';
+  $html = '<select id="wpplugin_settings_options" name="wpplugin_settings2['.$select_name.']">';
 
 	$html .= '<option value="option_one"' . selected( $select, 'option_one', false) . '>' . $args['option_one'] . '</option>';
 	$html .= '<option value="option_two"' . selected( $select, 'option_two', false) . '>' . $args['option_two'] . '</option>';

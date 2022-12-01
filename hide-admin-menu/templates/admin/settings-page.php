@@ -4,7 +4,7 @@
 
   <form method="post" action="options.php">
     <!-- Display necessary hidden fields for settings -->
-    <?php settings_fields( 'wpplugin_settings' ); ?>
+    <?php settings_fields( 'wpplugin_settings2' ); ?>
     <!-- Display the settings sections for the page -->
     <?php do_settings_sections( 'wpplugin' ); ?>
     <!-- Default Submit Button -->
