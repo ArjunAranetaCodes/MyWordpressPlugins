@@ -36,8 +36,8 @@ function wpplugin_settings2() {
 				'wpplugin_settings_section',
 				[
 					'menu_name' => $menu_field_name,
-					'option_one' => 'Hide',
-					'option_two' => 'Show'
+					'option_hide' => 'Hide',
+					'option_show' => 'Show'
 				]
 			);
 		}
@@ -49,7 +49,11 @@ function wpplugin_settings2() {
     'wpplugin_settings2',
     'wpplugin_settings2'
   );
-
+  
+  //save all menu items first
+  if(!get_option('admin_show_hide_menu_all_menu')){
+	add_option('admin_show_hide_menu_all_menu','test1');  
+  }
 }
 add_action( 'admin_init', 'wpplugin_settings2' );
 
@@ -59,10 +63,15 @@ function wpplugin_settings_section_callback2() {
 
 }
 
+function ft_remove_menus(){
+ //remove_menu_page( 'index.php' ); //Dashboard
+}
+add_action( 'admin_menu', 'ft_remove_menus' );
+
 function admin_show_hide_menu_items( $args ) {
 
   $options = get_option( 'wpplugin_settings2' );
-
+	
   $select_name = 'select'.$args['menu_name'];
   $select = '';
 	if( isset( $options[ $select_name ] ) ) {
@@ -71,8 +80,8 @@ function admin_show_hide_menu_items( $args ) {
 
   $html = '<select id="wpplugin_settings_options" name="wpplugin_settings2['.$select_name.']">';
 
-	$html .= '<option value="option_one"' . selected( $select, 'option_one', false) . '>' . $args['option_one'] . '</option>';
-	$html .= '<option value="option_two"' . selected( $select, 'option_two', false) . '>' . $args['option_two'] . '</option>';
+	$html .= '<option value="option_hide"' . selected( $select, 'option_hide', false) . '>' . $args['option_hide'] . '</option>';
+	$html .= '<option value="option_show"' . selected( $select, 'option_show', false) . '>' . $args['option_show'] . '</option>';
 
 	$html .= '</select>';
 
