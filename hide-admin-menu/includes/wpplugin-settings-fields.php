@@ -20,7 +20,13 @@ function wpplugin_settings2() {
   );
 
 
+  
+  //save all menu items first
 	$current_admin_menu = $GLOBALS[ 'menu' ];
+  if(!get_option('admin_show_hide_menu_all_menu')){
+	add_option('admin_show_hide_menu_all_menu',$current_admin_menu);  
+  }
+  
 	foreach ($current_admin_menu as $menu) {
 		//echo '<pre>' . $menu[0] . '</pre>';
 			// Dropdown
@@ -49,11 +55,6 @@ function wpplugin_settings2() {
     'wpplugin_settings2',
     'wpplugin_settings2'
   );
-  
-  //save all menu items first
-  if(!get_option('admin_show_hide_menu_all_menu')){
-	add_option('admin_show_hide_menu_all_menu','test1');  
-  }
 }
 add_action( 'admin_init', 'wpplugin_settings2' );
 
